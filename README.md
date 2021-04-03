@@ -8,7 +8,7 @@
 
 #### NativeScript 7x
 
-* `ns plugin add alexvergara/nativescript-aws-sdk`
+* `ns plugin add @avergara/nativescript-aws-sdk`
 
 ## Usage
 
