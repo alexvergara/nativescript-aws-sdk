@@ -6,13 +6,9 @@
 
 ## Installation
 
-#### NativeScript 4x
+#### NativeScript 7x
 
-* `tns plugin add nativescript-aws-sdk`
-
-#### NativeScript 3x
-
-* `tns plugin add nativescript-aws-sdk@0.0.4`
+* `ns plugin add alexvergara/nativescript-aws-sdk`
 
 ## Usage
 

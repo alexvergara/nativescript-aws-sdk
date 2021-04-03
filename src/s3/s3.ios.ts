@@ -11,8 +11,8 @@ import {
     StatusCode,
     UploadEventData
 } from './s3-common';
-import * as utils from 'tns-core-modules/utils/utils';
-import * as fs from 'tns-core-modules/file-system';
+import * as utils from '@nativescript/core/utils';
+import * as fs from '@nativescript/core/file-system';
 
 const main_queue = dispatch_get_current_queue();
 
@@ -21,6 +21,16 @@ const main_queue = dispatch_get_current_queue();
 declare const AWSEndpoint, AWSStaticCredentialsProvider,
     AWSBasicSessionCredentialsProvider, AWSServiceManager, AWSRegionType, AWSServiceConfiguration, AWSS3TransferUtility,
     AWSS3TransferUtilityUploadExpression;
+
+
+var getter = (function (_this, property) {
+  console.log("utils.ios.getter() is deprecated; use the respective native property instead");
+  if (typeof property === "function") {
+      return (property).call(_this);
+  } else {
+      return property;
+  }
+})
 
 export class S3 extends S3Base {
     private static Options: S3AuthOptions;
@@ -58,7 +68,8 @@ export class S3 extends S3Base {
             default:
                 throw new Error('Invalid S3AuthType');
         }
-        const manager = utils.ios.getter(AWSServiceManager, AWSServiceManager.defaultServiceManager);
+        //var manager = utils.ios.getter(AWSServiceManager, AWSServiceManager.defaultServiceManager);
+        var manager = getter(AWSServiceManager, AWSServiceManager.defaultServiceManager);
         config = AWSServiceConfiguration.alloc().initWithRegionEndpointCredentialsProvider(S3.getRegion(options.region), endPoint, credentialsProvider);
         config.maxRetryCount = 5;
         config.timeoutIntervalForRequest = 30;
@@ -131,7 +142,8 @@ export class S3 extends S3Base {
     }
 
     public createUpload(options: S3UploadOptions): number {
-        const transferUtility = utils.ios.getter(AWSS3TransferUtility, AWSS3TransferUtility.defaultS3TransferUtility);
+        //const transferUtility = utils.ios.getter(AWSS3TransferUtility, AWSS3TransferUtility.defaultS3TransferUtility);
+        const transferUtility = getter(AWSS3TransferUtility, AWSS3TransferUtility.defaultS3TransferUtility);
         const appRoot = fs.knownFolders.currentApp().path;
         let file;
         if (options.file && options.file.startsWith('~/')) {
@@ -232,7 +244,8 @@ export class S3 extends S3Base {
             }
             return null;
         });
-        const manager = utils.ios.getter(AWSServiceManager, AWSServiceManager.defaultServiceManager);
+        //const manager = utils.ios.getter(AWSServiceManager, AWSServiceManager.defaultServiceManager);
+        const manager = getter(AWSServiceManager, AWSServiceManager.defaultServiceManager);
         S3.OperationsData.set(id, {
             status: StatusCode.PENDING,
             path: file.path,
@@ -246,7 +259,8 @@ export class S3 extends S3Base {
     }
 
     public createDownload(options: S3DownloadOptions): number {
-        const transferUtility = utils.ios.getter(AWSS3TransferUtility, AWSS3TransferUtility.defaultS3TransferUtility);
+        //const transferUtility = utils.ios.getter(AWSS3TransferUtility, AWSS3TransferUtility.defaultS3TransferUtility);
+        const transferUtility = getter(AWSS3TransferUtility, AWSS3TransferUtility.defaultS3TransferUtility);
         const appRoot = fs.knownFolders.currentApp().path;
 
         let file;
